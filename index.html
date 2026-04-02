@@ -5,6 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Swasth Aahar — Healthy Eating for Elders</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#E8651A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Swasth Aahar">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -627,6 +633,7 @@
 // ── STATE ──────────────────────────────────
 let detectedIngredients = [];
 let selectedConcern = null;
+const API_KEY = "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";
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const MODEL = "claude-sonnet-4-20250514";
 
@@ -668,7 +675,12 @@ async function identifyIngredients(base64, mimeType) {
   try {
     const response = await fetch(ANTHROPIC_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 1000,
@@ -770,7 +782,12 @@ async function generateResults() {
 async function callClaude(prompt) {
   const response = await fetch(ANTHROPIC_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
     body: JSON.stringify({
       model: MODEL,
       max_tokens: 1000,
@@ -927,6 +944,15 @@ function restartApp() {
   document.getElementById('tipsContent').innerHTML = '';
   document.getElementById('restartBtn').style.display = 'none';
   goTo('s1');
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW error:', err));
+  });
 }
 </script>
 </body>
