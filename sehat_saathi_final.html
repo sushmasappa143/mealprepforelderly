@@ -1,94 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sehat Saathi</title>
-<style>
-body { font-family: Arial; margin:0; background:#FFFDF5; }
-.container { padding:20px; max-width:500px; margin:auto; }
-button { padding:12px; margin-top:10px; width:100%; border:none; border-radius:10px; background:#E8860A; color:white; font-size:16px; }
-input { margin-top:10px; }
-#output { margin-top:20px; background:white; padding:15px; border-radius:10px; }
-</style>
-</head>
-<body>
-<div class="container">
-<h2>Sehat Saathi 🍲</h2>
+9:41 AM
+Swasth Aahar
+●●● WiFi
 
-<input type="file" accept="image/*" id="imageInput">
-<button onclick="handleImage()">Detect Ingredients</button>
 
-<select id="healthGoal">
-<option value="weight loss">Weight Loss</option>
-<option value="cholesterol">Cholesterol Control</option>
-<option value="diabetes">Diabetes</option>
-</select>
 
-<button onclick="getRecipes()">Get Recipes</button>
 
-<div id="output"></div>
-</div>
-
-<script>
-let detectedItems = "";
-
-async function handleImage() {
-  const file = document.getElementById('imageInput').files[0];
-  if (!file) return alert("Upload image");
-
-  const reader = new FileReader();
-  reader.onloadend = async () => {
-    const base64 = reader.result;
-
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [{
-          role: "user",
-          content: [
-            { type: "text", text: "List Indian vegetables/fruits in this image." },
-            { type: "image_url", image_url: { url: base64 } }
-          ]
-        }]
-      })
-    });
-
-    const data = await response.json();
-    detectedItems = data.choices[0].message.content;
-    document.getElementById("output").innerHTML = "<b>Detected:</b> " + detectedItems;
-  };
-  reader.readAsDataURL(file);
-}
-
-async function getRecipes() {
-  if (!detectedItems) return alert("Detect items first");
-
-  const goal = document.getElementById("healthGoal").value;
-
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer YOUR_API_KEY",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: "gpt-4o-mini",
-      messages: [{
-        role: "user",
-        content: `Suggest 2 simple Indian recipes using ${detectedItems} for ${goal}. Include steps.`
-      }]
-    })
-  });
-
-  const data = await response.json();
-  document.getElementById("output").innerHTML += "<br><br><b>Recipes:</b><br>" + data.choices[0].message.content;
-}
-</script>
-</body>
-</html>
+✿
+Swasth Aahar
+स्वस्थ आहार
+Healthy eating, made simple for you
+Namaste! 🙏
+Welcome, Auntie / Uncle
+Tell us what's in your fridge today, and we'll suggest healthy Indian recipes — just for your health needs.
+📷
+Take a photo of your fridge
+We identify your vegetables and fruits automatically
+❤️
+Choose your health goal
+Diabetes, cholesterol, weight, BP and more
+🍲
+Get Indian recipes + exercises
+Personalised dals, sabzis, and light exercises
+Let's begin →
