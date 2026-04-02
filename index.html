@@ -779,7 +779,7 @@ async function generateResults() {
 }
 
 async function callClaude(prompt) {
-  if (!API_KEY || API_KEY === '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') throw new Error('API key not set');
+  if (!API_KEY) throw new Error('API key not set');
   const response = await fetch(ANTHROPIC_URL, {
     method: 'POST',
     headers: {
