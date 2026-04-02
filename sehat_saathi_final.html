@@ -1,24 +1,933 @@
-9:41 AM
-Swasth Aahar
-●●● WiFi
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Swasth Aahar — Healthy Eating for Elders</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --saffron: #E8651A;
+    --saffron-light: #FDF0E8;
+    --saffron-mid: #F5A96A;
+    --turmeric: #D4A017;
+    --turmeric-light: #FBF5E0;
+    --leaf: #2D6A4F;
+    --leaf-light: #E8F5EE;
+    --leaf-mid: #74C69D;
+    --spice: #8B2E1E;
+    --cream: #FDFAF5;
+    --warm-white: #FFFDF8;
+    --text-dark: #1A1208;
+    --text-mid: #4A3D2C;
+    --text-soft: #8A7A6A;
+    --border: rgba(200,170,120,0.25);
+    --card-bg: #FFFFFF;
+    --shadow: 0 2px 16px rgba(100,60,10,0.08);
+  }
 
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-✿
-Swasth Aahar
-स्वस्थ आहार
-Healthy eating, made simple for you
-Namaste! 🙏
-Welcome, Auntie / Uncle
-Tell us what's in your fridge today, and we'll suggest healthy Indian recipes — just for your health needs.
-📷
-Take a photo of your fridge
-We identify your vegetables and fruits automatically
-❤️
-Choose your health goal
-Diabetes, cholesterol, weight, BP and more
-🍲
-Get Indian recipes + exercises
-Personalised dals, sabzis, and light exercises
-Let's begin →
+  /* ── PHONE FRAME ── */
+  .phone-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 24px 16px;
+    background: linear-gradient(135deg, #F5EDD8 0%, #EAE0D0 100%);
+  }
+
+  .phone {
+    width: 100%;
+    max-width: 420px;
+    min-height: 760px;
+    background: var(--warm-white);
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(100,60,10,0.18), 0 4px 20px rgba(100,60,10,0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    background: var(--saffron);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+  }
+
+  /* ── SCREENS ── */
+  .screen {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .screen.active { display: flex; }
+
+  /* ── SCREEN 1: WELCOME ── */
+  .welcome-header {
+    background: var(--saffron);
+    padding: 32px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .welcome-header::before {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 50%;
+    transform: translateX(-50%);
+    width: 110%;
+    height: 60px;
+    background: var(--warm-white);
+    border-radius: 50%;
+  }
+  .mandala-bg {
+    position: absolute;
+    top: -20px; right: -30px;
+    width: 140px; height: 140px;
+    opacity: 0.12;
+    font-size: 130px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .app-logo {
+    font-family: 'Noto Serif', serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .app-tagline {
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  .hindi-sub {
+    font-family: 'Noto Serif', serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 2px;
+  }
+
+  .welcome-body {
+    padding: 48px 24px 32px;
+    flex: 1;
+  }
+  .greet-text {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .greet-sub {
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .feature-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .feat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .feat-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .feat-icon.orange { background: var(--saffron-light); }
+  .feat-icon.green  { background: var(--leaf-light); }
+  .feat-icon.yellow { background: var(--turmeric-light); }
+  .feat-title { font-size: 14px; font-weight: 500; color: var(--text-dark); margin-bottom: 2px; }
+  .feat-desc  { font-size: 12px; color: var(--text-soft); }
+
+  /* ── SCREEN 2: CAMERA ── */
+  .screen-header {
+    background: var(--saffron);
+    padding: 20px 20px 16px;
+    color: white;
+    flex-shrink: 0;
+  }
+  .back-btn {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: rgba(255,255,255,0.85);
+    cursor: pointer; margin-bottom: 12px;
+    background: none; border: none; padding: 0;
+  }
+  .screen-title {
+    font-family: 'Noto Serif', serif;
+    font-size: 22px; font-weight: 600;
+    line-height: 1.2;
+  }
+  .screen-sub { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 4px; }
+
+  .camera-area {
+    margin: 20px 20px 16px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px dashed var(--saffron-mid);
+    background: var(--saffron-light);
+    position: relative;
+    min-height: 220px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .camera-area.has-image { border-style: solid; border-color: var(--leaf); }
+  .camera-area img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0;left:0; border-radius: 18px; }
+  .camera-placeholder { text-align: center; padding: 32px; }
+  .cam-icon { font-size: 48px; margin-bottom: 12px; }
+  .cam-text { font-size: 16px; font-weight: 500; color: var(--saffron); margin-bottom: 4px; }
+  .cam-hint { font-size: 12px; color: var(--text-soft); }
+
+  .detected-chips {
+    margin: 0 20px 16px;
+  }
+  .det-label { font-size: 12px; font-weight: 500; color: var(--text-soft); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    background: var(--leaf-light);
+    border: 1px solid var(--leaf-mid);
+    color: var(--leaf);
+    font-size: 13px; font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: flex; align-items: center; gap: 6px;
+    animation: popIn 0.3s ease;
+  }
+  .chip-remove { cursor: pointer; color: var(--text-soft); font-size: 14px; }
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  /* ── SCREEN 3: HEALTH CONCERN ── */
+  .concern-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px;
+  }
+  .concern-card {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    padding: 18px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .concern-card:active { transform: scale(0.97); }
+  .concern-card.selected {
+    border-color: var(--saffron);
+    background: var(--saffron-light);
+  }
+  .concern-emoji { font-size: 32px; margin-bottom: 8px; }
+  .concern-name { font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
+  .concern-desc { font-size: 11px; color: var(--text-soft); }
+
+  /* ── SCREEN 4: RESULTS ── */
+  .results-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    gap: 0;
+    background: white;
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    flex: 1; padding: 14px 8px;
+    font-size: 13px; font-weight: 500;
+    color: var(--text-soft);
+    border: none; border-bottom: 3px solid transparent;
+    background: none; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { color: var(--saffron); border-bottom-color: var(--saffron); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .recipe-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin: 16px 16px 0;
+  }
+  .recipe-header {
+    background: linear-gradient(135deg, var(--saffron-light), var(--turmeric-light));
+    padding: 16px 18px 12px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+  }
+  .recipe-emoji { font-size: 36px; margin-right: 12px; }
+  .recipe-name { font-family: 'Noto Serif', serif; font-size: 17px; font-weight: 600; color: var(--text-dark); line-height: 1.2; }
+  .recipe-meta { display: flex; gap: 12px; margin-top: 6px; }
+  .recipe-badge {
+    font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 10px;
+    background: white; color: var(--saffron); border: 1px solid var(--saffron-mid);
+  }
+  .recipe-body { padding: 14px 18px 18px; }
+  .section-mini-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-soft); margin-bottom: 8px; }
+  .ingredient-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 13px; color: var(--text-mid); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--saffron-mid); flex-shrink: 0; }
+  .step-row { display: flex; gap: 10px; margin-bottom: 10px; font-size: 13px; color: var(--text-mid); line-height: 1.5; }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--saffron); color: white; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .health-tip { background: var(--leaf-light); border-left: 3px solid var(--leaf); border-radius: 0 10px 10px 0; padding: 10px 14px; margin-top: 14px; font-size: 12px; color: var(--leaf); line-height: 1.5; }
+
+  .exercise-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    margin: 16px 16px 0;
+    padding: 18px;
+  }
+  .ex-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .ex-icon { font-size: 30px; }
+  .ex-name { font-family: 'Noto Serif', serif; font-size: 16px; font-weight: 600; }
+  .ex-meta { font-size: 12px; color: var(--text-soft); }
+  .ex-steps { }
+  .ex-step { display: flex; gap: 10px; margin-bottom: 8px; font-size: 13px; color: var(--text-mid); line-height: 1.5; }
+  .ex-badge { font-size: 11px; padding: 2px 10px; border-radius: 10px; background: var(--leaf-light); color: var(--leaf); border: 1px solid var(--leaf-mid); display: inline-block; margin-right: 6px; }
+
+  .ai-loading {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 48px 32px; gap: 16px;
+  }
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--saffron-light);
+    border-top-color: var(--saffron);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 15px; color: var(--text-soft); text-align: center; }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    background: var(--saffron);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s ease;
+    letter-spacing: 0.2px;
+  }
+  .btn-primary:active { transform: scale(0.98); opacity: 0.9; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-secondary {
+    background: white;
+    color: var(--saffron);
+    border: 2px solid var(--saffron);
+    border-radius: 16px;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .btn-wrap { padding: 0 20px 28px; }
+  .or-text { text-align: center; font-size: 13px; color: var(--text-soft); margin: 10px 0; }
+
+  /* ── PROGRESS DOTS ── */
+  .progress-dots {
+    display: flex; justify-content: center; gap: 6px;
+    padding: 12px 0;
+    background: var(--saffron);
+  }
+  .pdot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.35); transition: all 0.3s; }
+  .pdot.active { background: white; width: 20px; border-radius: 4px; }
+
+  /* ── HIDDEN FILE INPUT ── */
+  #fileInput { display: none; }
+
+  /* ── LANGUAGE BADGE ── */
+  .lang-row { display: flex; gap: 8px; margin-bottom: 20px; }
+  .lang-btn { padding: 6px 14px; border-radius: 10px; font-size: 13px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--text-mid); }
+  .lang-btn.active { background: var(--saffron-light); border-color: var(--saffron-mid); color: var(--saffron); font-weight: 500; }
+
+  .results-scroll { flex: 1; overflow-y: auto; padding-bottom: 24px; }
+  .restart-btn-wrap { padding: 16px 16px 0; }
+
+  .summary-bar {
+    background: var(--leaf);
+    color: white;
+    padding: 12px 20px;
+    font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+    flex-shrink: 0;
+  }
+  .summary-bar strong { font-weight: 600; }
+
+  /* Add more bottom padding for last card */
+  .results-scroll > *:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="phone-wrap">
+<div class="phone">
+  <div class="status-bar">
+    <span>9:41 AM</span>
+    <span>Swasth Aahar</span>
+    <span>●●● WiFi</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 1 — WELCOME
+  ═══════════════════════════════════════ -->
+  <div class="screen active" id="s1">
+    <div class="welcome-header">
+      <div class="progress-dots">
+        <div class="pdot active" id="pd1"></div>
+        <div class="pdot" id="pd2"></div>
+        <div class="pdot" id="pd3"></div>
+        <div class="pdot" id="pd4"></div>
+      </div>
+      <div class="mandala-bg">✿</div>
+      <div class="app-logo">Swasth Aahar</div>
+      <div class="hindi-sub">स्वस्थ आहार</div>
+      <div class="app-tagline">Healthy eating, made simple for you</div>
+    </div>
+
+    <div class="welcome-body">
+      <div class="greet-text">Namaste! 🙏<br>Welcome, Auntie / Uncle</div>
+      <div class="greet-sub">Tell us what's in your fridge today, and we'll suggest healthy Indian recipes — just for your health needs.</div>
+
+      <div class="feature-cards">
+        <div class="feat-card">
+          <div class="feat-icon orange">📷</div>
+          <div>
+            <div class="feat-title">Take a photo of your fridge</div>
+            <div class="feat-desc">We identify your vegetables and fruits automatically</div>
+          </div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon yellow">❤️</div>
+          <div>
+            <div class="feat-title">Choose your health goal</div>
+            <div class="feat-desc">Diabetes, cholesterol, weight, BP and more</div>
+          </div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon green">🍲</div>
+          <div>
+            <div class="feat-title">Get Indian recipes + exercises</div>
+            <div class="feat-desc">Personalised dals, sabzis, and light exercises</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-wrap" style="padding: 0;">
+        <button class="btn-primary" onclick="goTo('s2')">Let's begin →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 2 — CAMERA / FRIDGE PHOTO
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="s2">
+    <div class="screen-header">
+      <div class="progress-dots" style="background:transparent; padding: 0 0 12px;">
+        <div class="pdot" id="pd1b"></div>
+        <div class="pdot active" id="pd2b"></div>
+        <div class="pdot" id="pd3b"></div>
+        <div class="pdot" id="pd4b"></div>
+      </div>
+      <div class="screen-title">📷 Photo of your fridge</div>
+      <div class="screen-sub">Open your fridge and take a photo of what's inside</div>
+    </div>
+
+    <div class="camera-area" id="cameraArea" onclick="document.getElementById('fileInput').click()">
+      <div class="camera-placeholder" id="camPlaceholder">
+        <div class="cam-icon">📸</div>
+        <div class="cam-text">Tap to open camera</div>
+        <div class="cam-hint">Or choose a photo from gallery</div>
+      </div>
+      <img id="previewImg" style="display:none;" alt="Fridge contents">
+    </div>
+
+    <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleImage(event)">
+
+    <div class="detected-chips" id="detectedSection" style="display:none;">
+      <div class="det-label">✅ Detected in your fridge</div>
+      <div class="chips-wrap" id="chipsWrap"></div>
+    </div>
+
+    <div style="padding: 0 20px; margin-top: 8px;" id="addMoreSection" style="display:none;">
+      <div class="det-label" style="margin-bottom:6px;">Add more items manually</div>
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="manualItem" placeholder="e.g. spinach, dal…" 
+          style="flex:1; padding:10px 14px; border-radius:12px; border:1px solid var(--border); font-size:14px; font-family:'DM Sans',sans-serif; color:var(--text-dark); outline:none;">
+        <button onclick="addManualItem()" style="padding:10px 18px; border-radius:12px; background:var(--saffron); color:white; border:none; font-weight:600; font-size:14px; cursor:pointer;">Add</button>
+      </div>
+    </div>
+
+    <div style="flex:1;"></div>
+
+    <div class="btn-wrap" style="padding: 16px 20px 28px;">
+      <button class="btn-primary" id="nextBtn2" onclick="goTo('s3')" disabled>Choose health concern →</button>
+      <button class="btn-secondary" onclick="useDemoIngredients()">Use demo ingredients (try it!)</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 3 — HEALTH CONCERN
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="s3">
+    <div class="screen-header">
+      <div class="progress-dots" style="background:transparent; padding: 0 0 12px;">
+        <div class="pdot"></div><div class="pdot"></div><div class="pdot active"></div><div class="pdot"></div>
+      </div>
+      <div class="screen-title">What is your health concern?</div>
+      <div class="screen-sub">Choose the one most important to you today</div>
+    </div>
+
+    <div class="concern-grid" id="concernGrid">
+      <div class="concern-card" onclick="selectConcern(this, 'diabetes')">
+        <div class="concern-emoji">🩸</div>
+        <div class="concern-name">Control Diabetes</div>
+        <div class="concern-desc">Blood sugar management</div>
+      </div>
+      <div class="concern-card" onclick="selectConcern(this, 'cholesterol')">
+        <div class="concern-emoji">🫀</div>
+        <div class="concern-name">Cholesterol</div>
+        <div class="concern-desc">Heart health &amp; lipids</div>
+      </div>
+      <div class="concern-card" onclick="selectConcern(this, 'weight')">
+        <div class="concern-emoji">⚖️</div>
+        <div class="concern-name">Lose Weight</div>
+        <div class="concern-desc">Healthy weight loss</div>
+      </div>
+      <div class="concern-card" onclick="selectConcern(this, 'bp')">
+        <div class="concern-emoji">💊</div>
+        <div class="concern-name">Blood Pressure</div>
+        <div class="concern-desc">Reduce hypertension</div>
+      </div>
+      <div class="concern-card" onclick="selectConcern(this, 'digestion')">
+        <div class="concern-emoji">🌿</div>
+        <div class="concern-name">Better Digestion</div>
+        <div class="concern-desc">Gut health &amp; acidity</div>
+      </div>
+      <div class="concern-card" onclick="selectConcern(this, 'joints')">
+        <div class="concern-emoji">🦴</div>
+        <div class="concern-name">Joint &amp; Bone Health</div>
+        <div class="concern-desc">Arthritis &amp; calcium</div>
+      </div>
+    </div>
+
+    <div class="btn-wrap">
+      <button class="btn-primary" id="nextBtn3" onclick="generateResults()" disabled>Get my plan →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 4 — RESULTS
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="s4" style="flex-direction:column;">
+    <div class="screen-header">
+      <div class="progress-dots" style="background:transparent; padding: 0 0 12px;">
+        <div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot active"></div>
+      </div>
+      <div class="screen-title">Your personalised plan</div>
+      <div class="screen-sub" id="resultsSubtitle">Today's recipes &amp; exercises for you</div>
+    </div>
+
+    <div class="summary-bar" id="summaryBar">
+      <span>🥘</span> <span id="summaryText">Loading your plan…</span>
+    </div>
+
+    <div class="results-tabs">
+      <button class="tab-btn active" onclick="switchTab('recipes', this)">🍲 Recipes</button>
+      <button class="tab-btn" onclick="switchTab('exercises', this)">🧘 Exercises</button>
+      <button class="tab-btn" onclick="switchTab('tips', this)">💡 Daily Tips</button>
+    </div>
+
+    <div class="results-scroll">
+      <div class="tab-content active" id="tab-recipes">
+        <div class="ai-loading" id="recipesLoading">
+          <div class="spinner"></div>
+          <div class="loading-text">Asking our AI chef for your Indian recipes…</div>
+        </div>
+        <div id="recipesContent"></div>
+      </div>
+
+      <div class="tab-content" id="tab-exercises">
+        <div class="ai-loading" id="exercisesLoading">
+          <div class="spinner"></div>
+          <div class="loading-text">Finding gentle exercises for you…</div>
+        </div>
+        <div id="exercisesContent"></div>
+      </div>
+
+      <div class="tab-content" id="tab-tips">
+        <div class="ai-loading" id="tipsLoading">
+          <div class="spinner"></div>
+          <div class="loading-text">Preparing your daily health tips…</div>
+        </div>
+        <div id="tipsContent"></div>
+      </div>
+
+      <div class="restart-btn-wrap">
+        <button class="btn-secondary" onclick="restartApp()" style="display:none;" id="restartBtn">🔄 Start over for tomorrow</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /phone -->
+</div><!-- /phone-wrap -->
+
+<script>
+// ── STATE ──────────────────────────────────
+let detectedIngredients = [];
+let selectedConcern = null;
+const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
+const MODEL = "claude-sonnet-4-20250514";
+
+// ── NAVIGATION ─────────────────────────────
+function goTo(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── IMAGE HANDLING ─────────────────────────
+function handleImage(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (ev) => {
+    const dataUrl = ev.target.result;
+    const img = document.getElementById('previewImg');
+    img.src = dataUrl;
+    img.style.display = 'block';
+    document.getElementById('camPlaceholder').style.display = 'none';
+    document.getElementById('cameraArea').classList.add('has-image');
+    document.getElementById('cameraArea').style.minHeight = '240px';
+
+    // Show loading chips
+    document.getElementById('detectedSection').style.display = 'block';
+    document.getElementById('addMoreSection').style.display = 'block';
+    document.getElementById('chipsWrap').innerHTML = '<div style="font-size:13px;color:var(--text-soft);display:flex;align-items:center;gap:8px;"><div class="spinner" style="width:18px;height:18px;border-width:2px;"></div> Identifying ingredients…</div>';
+
+    // Call Claude API with the image
+    const base64 = dataUrl.split(',')[1];
+    const mimeType = file.type || 'image/jpeg';
+    await identifyIngredients(base64, mimeType);
+  };
+  reader.readAsDataURL(file);
+}
+
+async function identifyIngredients(base64, mimeType) {
+  try {
+    const response = await fetch(ANTHROPIC_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: mimeType, data: base64 } },
+            { type: 'text', text: `Look at this photo of food items (likely from a fridge or kitchen). List ALL visible vegetables, fruits, legumes, grains, and fresh food items. Reply ONLY with a JSON array of item names in English, single words or short phrases. Example: ["spinach","tomato","bitter gourd","curd","lemon"]. Include only food items you can see. No explanation, no markdown, only the JSON array.` }
+          ]
+        }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content.map(i => i.text || '').join('');
+    const clean = text.replace(/```json|```/g,'').trim();
+    const items = JSON.parse(clean);
+    detectedIngredients = items;
+    renderChips();
+    document.getElementById('nextBtn2').disabled = detectedIngredients.length === 0;
+  } catch(err) {
+    // Fallback if API fails
+    document.getElementById('chipsWrap').innerHTML = '<div style="font-size:13px;color:var(--spice);">Could not auto-detect. Please add items manually below.</div>';
+  }
+}
+
+function renderChips() {
+  const wrap = document.getElementById('chipsWrap');
+  wrap.innerHTML = '';
+  detectedIngredients.forEach((item, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.innerHTML = `${item} <span class="chip-remove" onclick="removeChip(${i})">✕</span>`;
+    wrap.appendChild(chip);
+  });
+  document.getElementById('nextBtn2').disabled = detectedIngredients.length === 0;
+}
+
+function removeChip(i) {
+  detectedIngredients.splice(i, 1);
+  renderChips();
+}
+
+function addManualItem() {
+  const inp = document.getElementById('manualItem');
+  const val = inp.value.trim();
+  if (!val) return;
+  detectedIngredients.push(val);
+  inp.value = '';
+  renderChips();
+  document.getElementById('detectedSection').style.display = 'block';
+  document.getElementById('addMoreSection').style.display = 'block';
+}
+
+function useDemoIngredients() {
+  detectedIngredients = ['spinach', 'tomato', 'bitter gourd', 'onion', 'garlic', 'ginger', 'lemon', 'curd', 'green chilli', 'carrot', 'turmeric'];
+  document.getElementById('detectedSection').style.display = 'block';
+  document.getElementById('addMoreSection').style.display = 'block';
+  document.getElementById('cameraArea').style.background = '#E8F5EE';
+  document.getElementById('camPlaceholder').innerHTML = '<div class="cam-icon">🥦</div><div class="cam-text" style="color:var(--leaf)">Demo ingredients loaded</div>';
+  renderChips();
+}
+
+// ── CONCERN SELECTION ──────────────────────
+function selectConcern(el, concern) {
+  document.querySelectorAll('.concern-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedConcern = concern;
+  document.getElementById('nextBtn3').disabled = false;
+}
+
+// ── TAB SWITCHING ──────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── GENERATE RESULTS ───────────────────────
+const concernLabels = {
+  diabetes: 'Controlling Diabetes', cholesterol: 'Managing Cholesterol',
+  weight: 'Losing Weight', bp: 'Reducing Blood Pressure',
+  digestion: 'Better Digestion', joints: 'Joint & Bone Health'
+};
+
+async function generateResults() {
+  goTo('s4');
+  const concern = concernLabels[selectedConcern];
+  const ingredients = detectedIngredients.join(', ');
+  document.getElementById('summaryText').textContent = `${ingredients.substring(0,40)}… • ${concern}`;
+  document.getElementById('resultsSubtitle').textContent = `For: ${concern}`;
+
+  // Run all three in parallel
+  generateRecipes(ingredients, concern);
+  generateExercises(concern);
+  generateTips(ingredients, concern);
+}
+
+async function callClaude(prompt) {
+  const response = await fetch(ANTHROPIC_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  const data = await response.json();
+  const text = data.content.map(i => i.text || '').join('');
+  return text.replace(/```json|```/g,'').trim();
+}
+
+async function generateRecipes(ingredients, concern) {
+  const prompt = `You are a nutritionist specialising in Indian cuisine for elderly people (age 60+). 
+Available ingredients: ${ingredients}
+Health concern: ${concern}
+
+Generate exactly 2 healthy Indian recipes using these ingredients. Reply ONLY with a JSON array:
+[
+  {
+    "name": "Recipe name in English",
+    "emoji": "one relevant food emoji",
+    "time": "cooking time e.g. 20 mins",
+    "servings": "serves 2",
+    "ingredients": ["ingredient 1 with quantity", "ingredient 2 with quantity"],
+    "steps": ["Step 1 instruction", "Step 2 instruction", "Step 3 instruction"],
+    "healthTip": "One sentence on why this recipe specifically helps with ${concern} for elderly"
+  }
+]
+Use only ingredients from the provided list. Make recipes simple, low-oil, no deep frying. Only JSON array, no markdown, no explanation.`;
+
+  try {
+    const text = await callClaude(prompt);
+    const recipes = JSON.parse(text);
+    const html = recipes.map(r => `
+      <div class="recipe-card">
+        <div class="recipe-header">
+          <div style="display:flex;align-items:flex-start;gap:2px;flex:1;">
+            <span class="recipe-emoji">${r.emoji}</span>
+            <div>
+              <div class="recipe-name">${r.name}</div>
+              <div class="recipe-meta">
+                <span class="recipe-badge">⏱ ${r.time}</span>
+                <span class="recipe-badge">👥 ${r.servings}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-mini-title">Ingredients</div>
+          ${r.ingredients.map(i => `<div class="ingredient-row"><div class="dot"></div>${i}</div>`).join('')}
+          <div class="section-mini-title" style="margin-top:14px;">Method</div>
+          ${r.steps.map((s,i) => `<div class="step-row"><div class="step-num">${i+1}</div><div>${s}</div></div>`).join('')}
+          <div class="health-tip">🌿 ${r.healthTip}</div>
+        </div>
+      </div>
+    `).join('');
+    document.getElementById('recipesLoading').style.display = 'none';
+    document.getElementById('recipesContent').innerHTML = html;
+    document.getElementById('restartBtn').style.display = 'block';
+  } catch(e) {
+    document.getElementById('recipesLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Could not load recipes. Please check your connection and try again.</div>';
+  }
+}
+
+async function generateExercises(concern) {
+  const prompt = `You are a physiotherapist specialising in gentle exercises for elderly Indians (age 60+).
+Health concern: ${concern}
+
+Suggest 2 safe, gentle exercises. Reply ONLY with a JSON array:
+[
+  {
+    "name": "Exercise name",
+    "emoji": "relevant emoji",
+    "duration": "e.g. 10 minutes",
+    "intensity": "Light / Moderate",
+    "steps": ["Step 1", "Step 2", "Step 3"],
+    "caution": "One safety note for elderly"
+  }
+]
+No floor exercises that require lying down. Seated or standing only. No markdown, only JSON array.`;
+
+  try {
+    const text = await callClaude(prompt);
+    const exercises = JSON.parse(text);
+    const html = exercises.map(ex => `
+      <div class="exercise-card">
+        <div class="ex-header">
+          <span class="ex-icon">${ex.emoji}</span>
+          <div>
+            <div class="ex-name">${ex.name}</div>
+            <div class="ex-meta"><span class="ex-badge">${ex.intensity}</span> ${ex.duration}</div>
+          </div>
+        </div>
+        ${ex.steps.map((s,i) => `<div class="ex-step"><div class="step-num">${i+1}</div><div>${s}</div></div>`).join('')}
+        <div class="health-tip" style="margin-top:12px;">⚠️ ${ex.caution}</div>
+      </div>
+    `).join('');
+    document.getElementById('exercisesLoading').style.display = 'none';
+    document.getElementById('exercisesContent').innerHTML = html;
+  } catch(e) {
+    document.getElementById('exercisesLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Could not load exercises. Please check your connection.</div>';
+  }
+}
+
+async function generateTips(ingredients, concern) {
+  const prompt = `You are a health advisor for elderly Indians (age 60+) managing ${concern}.
+Available food: ${ingredients}
+
+Give 4 short practical daily health tips. Reply ONLY as JSON array:
+[
+  { "icon": "emoji", "title": "Short tip title", "body": "2 sentence explanation specific to ${concern} and Indian lifestyle" }
+]
+Be warm, simple, and encouraging. No markdown, only JSON.`;
+
+  try {
+    const text = await callClaude(prompt);
+    const tips = JSON.parse(text);
+    const html = `<div style="padding:16px;display:flex;flex-direction:column;gap:12px;">` +
+      tips.map(t => `
+        <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:28px;flex-shrink:0;">${t.icon}</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--text-dark);margin-bottom:4px;">${t.title}</div>
+            <div style="font-size:13px;color:var(--text-mid);line-height:1.6;">${t.body}</div>
+          </div>
+        </div>
+      `).join('') + `</div>`;
+    document.getElementById('tipsLoading').style.display = 'none';
+    document.getElementById('tipsContent').innerHTML = html;
+  } catch(e) {
+    document.getElementById('tipsLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Could not load tips. Please check your connection.</div>';
+  }
+}
+
+function restartApp() {
+  detectedIngredients = [];
+  selectedConcern = null;
+  document.getElementById('previewImg').style.display = 'none';
+  document.getElementById('camPlaceholder').style.display = 'block';
+  document.getElementById('camPlaceholder').innerHTML = '<div class="cam-icon">📸</div><div class="cam-text">Tap to open camera</div><div class="cam-hint">Or choose a photo from gallery</div>';
+  document.getElementById('cameraArea').classList.remove('has-image');
+  document.getElementById('cameraArea').style.background = 'var(--saffron-light)';
+  document.getElementById('detectedSection').style.display = 'none';
+  document.getElementById('addMoreSection').style.display = 'none';
+  document.getElementById('chipsWrap').innerHTML = '';
+  document.getElementById('nextBtn2').disabled = true;
+  document.querySelectorAll('.concern-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('nextBtn3').disabled = true;
+  document.getElementById('recipesLoading').style.display = 'flex';
+  document.getElementById('exercisesLoading').style.display = 'flex';
+  document.getElementById('tipsLoading').style.display = 'flex';
+  document.getElementById('recipesContent').innerHTML = '';
+  document.getElementById('exercisesContent').innerHTML = '';
+  document.getElementById('tipsContent').innerHTML = '';
+  document.getElementById('restartBtn').style.display = 'none';
+  goTo('s1');
+}
+</script>
+</body>
+</html>
