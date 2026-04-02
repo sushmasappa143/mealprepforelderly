@@ -633,9 +633,9 @@
 // ── STATE ──────────────────────────────────
 let detectedIngredients = [];
 let selectedConcern = null;
-const API_KEY = "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";
+const API_KEY = "YOUR_API_KEY_HERE";
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
-const MODEL = "claude-sonnet-4-20250514";
+const MODEL = "claude-opus-4-5";
 
 // ── NAVIGATION ─────────────────────────────
 function goTo(screenId) {
@@ -780,6 +780,7 @@ async function generateResults() {
 }
 
 async function callClaude(prompt) {
+  if (!API_KEY || API_KEY === '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') throw new Error('API key not set');
   const response = await fetch(ANTHROPIC_URL, {
     method: 'POST',
     headers: {
@@ -795,6 +796,7 @@ async function callClaude(prompt) {
     })
   });
   const data = await response.json();
+  if (!response.ok) throw new Error(data.error?.message || response.status + ' ' + response.statusText);
   const text = data.content.map(i => i.text || '').join('');
   return text.replace(/```json|```/g,'').trim();
 }
@@ -848,7 +850,7 @@ Use only ingredients from the provided list. Make recipes simple, low-oil, no de
     document.getElementById('recipesContent').innerHTML = html;
     document.getElementById('restartBtn').style.display = 'block';
   } catch(e) {
-    document.getElementById('recipesLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Could not load recipes. Please check your connection and try again.</div>';
+    document.getElementById('recipesLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Error: ' + e.message + '</div>';
   }
 }
 
@@ -888,7 +890,7 @@ No floor exercises that require lying down. Seated or standing only. No markdown
     document.getElementById('exercisesLoading').style.display = 'none';
     document.getElementById('exercisesContent').innerHTML = html;
   } catch(e) {
-    document.getElementById('exercisesLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Could not load exercises. Please check your connection.</div>';
+    document.getElementById('exercisesLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Error: ' + e.message + '</div>';
   }
 }
 
@@ -918,7 +920,7 @@ Be warm, simple, and encouraging. No markdown, only JSON.`;
     document.getElementById('tipsLoading').style.display = 'none';
     document.getElementById('tipsContent').innerHTML = html;
   } catch(e) {
-    document.getElementById('tipsLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Could not load tips. Please check your connection.</div>';
+    document.getElementById('tipsLoading').innerHTML = '<div style="padding:20px;color:var(--spice);font-size:14px;">Error: ' + e.message + '</div>';
   }
 }
 
